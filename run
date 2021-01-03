@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# exit if any command fails
+set -e
+
+
+_main() {
+    if [[ $# -eq 0 || "$1" == "help" ]]; then
+        # No args provided, print help
+        _displayUsage
+        exit
+    elif [[ "$(type -t $1)" == "function" ]]; then
+        # First arg is a function in this script
+        # execute command as provided
+        "$@"
+    else
+        # First arg is not a function in this script
+        # print help
+        _displayUsage
+    fi
+}
+
+_displayUsage() {
+    echo -e "
+Commands:
+
+help (or invalid args)
+    Prints these instructions
+
+buildApp
+    Builds the application's docker container and tags it as rental_property_scraper:latest.
+
+runApp
+    Runs the application's docker container.
+
+buildAndRunApp
+    Builds and then runs the application's docker container.
+    "
+}
+
+
+
+buildApp() {
+    echo "Building the rental_property_scraper docker container"
+    docker build -t rental_property_scraper:latest -f Dockerfile .
+}
+
+runApp() {
+    echo "Running the rental_property_scraper docker container"
+    docker run rental_property_scraper:latest
+}
+
+buildAndRunApp() {
+    echo "Attempting to build and then run the rental_property_scraper docker container"
+
+    buildApp
+
+    runApp
+}
+

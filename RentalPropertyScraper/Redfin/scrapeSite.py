@@ -17,8 +17,7 @@ def get_listings(redfin_search_url):
     options.add_argument("headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.Chrome(executable_path="C:\chromedriver_win32\chromedriver.exe", options=options)
-    #driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(options=options)
     driver.get(redfin_search_url)
     time.sleep(8)
 

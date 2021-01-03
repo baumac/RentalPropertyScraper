@@ -25,10 +25,10 @@ def send_email_with_attachment(attachment_file_path, email_cfg):
     msg['To'] = to_addr
 
     # storing the subject
-    msg['Subject'] = "RedFin Property Scrape Results"
+    msg['Subject'] = "Rental Property Scrape Results"
 
     # string to store the body of the mail
-    body = "The scrape results are in an attachment to this email"
+    body = "The scrape results are in .csv file(s) attached to this email"
 
     # attach the body with the msg instance
     msg.attach(MIMEText(body, 'plain'))
