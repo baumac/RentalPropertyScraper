@@ -3,7 +3,7 @@
 # In it's current state this project scrapes a Redfin property listing search
 # to find the listings with the best price to rental income ratio.
 #
-# The results are then stored in a csv file, and emailed to the desired recipient(s).
+# The results are then stored in a csv file, and emailed to the desired recipient.
 
 import yaml
 
@@ -26,4 +26,4 @@ if __name__ == '__main__':
 
     send_email_with_attachment(RedfinResultsFilePath, email_cfg)
 
-    print("Emailed Redfin results file to: " + email_cfg["toEmail"]["address"])
+    print("Emailed scraping result file(s) to: " + email_cfg["toEmail"]["address"])
