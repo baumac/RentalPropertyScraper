@@ -9,11 +9,15 @@ from email.mime.base import MIMEBase
 from email import encoders
 
 
-def send_email_with_attachment(attachment_file_path, email_cfg):
-
-    from_addr = email_cfg["fromEmail"]["address"]
-    from_pass = email_cfg["fromEmail"]["password"]
-    to_addr = email_cfg["toEmail"]["address"]
+# Attempts to send an email
+# Consumes: the attachment file path to send, the application config
+# Returns: 0 on success and -1 on failure
+def send_email_with_attachment(attachment_file_path, cfg):
+    # Set up vars
+    from_addr = cfg["email"]["fromEmail"]["address"]
+    from_pass = cfg["email"]["fromEmail"]["password"]
+    to_addr = cfg["email"]["toEmail"]["address"]
+    redfin_search_url = cfg["redfin"]["searchUrl"]
 
     # instance of MIMEMultipart
     msg = MIMEMultipart()
@@ -28,7 +32,11 @@ def send_email_with_attachment(attachment_file_path, email_cfg):
     msg['Subject'] = "Rental Property Scrape Results"
 
     # string to store the body of the mail
-    body = "The scrape results are in .csv file(s) attached to this email"
+    body = "The automated scrape results are in .csv file(s) attached to this email. " \
+           "These results were scraped from: " + redfin_search_url + \
+           "\n \n" + \
+           "For more information see: https://github.com/Icehotburn/RentalPropertyScraper" + \
+           "\n \n"
 
     # attach the body with the msg instance
     msg.attach(MIMEText(body, 'plain'))
@@ -64,7 +72,14 @@ def send_email_with_attachment(attachment_file_path, email_cfg):
     text = msg.as_string()
 
     # sending the mail
-    s.sendmail(from_addr, to_addr, text)
+    sendErrors = s.sendmail(from_addr, to_addr, text)
 
     # terminating the session
     s.quit()
+
+    if len(sendErrors) > 0:
+        print("Error sending email, caused by: " + sendErrors)
+        return -1
+    else:
+        print("Email sent successfully.")
+        return 0

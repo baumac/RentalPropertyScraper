@@ -17,13 +17,15 @@ if __name__ == '__main__':
 
     with open("config.yaml", "r") as ymlfile:
         cfg = yaml.full_load(ymlfile)
-        redfin_cfg = cfg["redfin"]
-        email_cfg = cfg["email"]
 
-    RedfinResultsFilePath = scrape_redfin_search(redfin_cfg)
+    RedfinResultsFilePath = scrape_redfin_search(cfg)
 
     print("Created Redfin results file: " + RedfinResultsFilePath)
 
-    send_email_with_attachment(RedfinResultsFilePath, email_cfg)
+    response = send_email_with_attachment(RedfinResultsFilePath, cfg)
 
-    print("Emailed scraping result file(s) to: " + email_cfg["toEmail"]["address"])
+    if response == 0:
+        print("Emailed scraping result file(s) to: " + cfg["email"]["toEmail"]["address"])
+    else:
+        print("Failed to emailed scraping result file(s) to: " + cfg["email"]["toEmail"]["address"])
+

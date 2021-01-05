@@ -4,14 +4,13 @@
 This Python app uses Selenium Webdriver to scrape property listings from real estate websites. 
 The app gathers the listing price, annual rental income, and url to the listing and then stores it in a csv file. 
 
-### Supported websites: 
-1. Redfin
-
-### Key Features
+### Technology used
 1. Python - the programming language
 2. Selenium Webdriver - to scrape the web pages
 3. Docker - to provide a stable runtime environment
 
+### Supported websites: 
+1. Redfin
 ---
 
 ## Usage
